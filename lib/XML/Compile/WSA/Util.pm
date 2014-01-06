@@ -1,7 +1,14 @@
+# Copyrights 2010-2014 by [Mark Overmeer].
+#  For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 2.01.
 use warnings;
 use strict;
 
 package XML::Compile::WSA::Util;
+use vars '$VERSION';
+$VERSION = '0.92';
+
 use base 'Exporter';
 
 my @wsa09  = qw/WSA09 WSA09FAULT WSA09ROLE_ANON/;
@@ -23,23 +30,6 @@ our %EXPORT_TAGS =
   , soap12 => \@soap12
   );
 
-=chapter NAME
-XML::Compile::WSA::Util - constants for XML::Compile::WSA
-
-=chapter SYNOPSYS
- use XML::Compile::WSA::Util qw/:wsa10/;
-
-=chapter DESCRIPTION
-This module collects constants used by the Web Service Addressing
-standard.
-
-=chapter FUNCTIONS
-
-=section Constants
-
-Export TAG C<:wsa09> exports constants C<WSA09> (Web Service Addressing),
-C<WSA09_ROLE_ANON>, and C<WSA09_FAULT>.
-=cut
 
 use constant
   { WSA09           => 'http://schemas.xmlsoap.org/ws/2004/08/addressing'
@@ -51,16 +41,6 @@ use constant
   , WSA09ROLE_ANON  => WSA09.'/role/anonymous'
   };
 
-=pod
-
-Export TAG C<:wsa10> delivers constants C<WSA10>,
-C<WSA10ADDR_ANON>, C<WSA10ADDR_NONE>,
-C<WSA10REL_REPLY>, C<WSA10REL_UNSPEC>,
-C<WSA10FAULT>, C<WSA10SOAP_FAULT>,
-and C<WSA10MODULE>.
-The latter is an abstract name for the software component.
-
-=cut
 
 use constant
   { WSA10FAULT      => WSA10.'/fault'
@@ -72,24 +52,11 @@ use constant
   , WSA10MODULE     => WSA10.'/module'
   };
 
-=pod
-Export TAG C<:wsdl11> provides constants C<WSDL11WSAW>.
-=cut
 
 use constant
   { WSDL11WSAW      => 'http://www.w3.org/2006/05/addressing/wsdl'
   };
 
-=pod
-Export TAG C<:wsdl20> provides no constants (yet)
-
-Export TAG C<:soap11> defines nothing (yet)
-
-Export TAG C<:soap12> provides constants C<SOAP12FEAT_DEST> (Destination), 
-C<_SE> (SourceEndpoint>, C<_RE> (ReplyEndpoint), <C_FE> (FaultEndpoint),
-C<_ACT> (Action), C<_ID> (MessageID), C<_REL> (Relationship), and
-C<_REF> (ReferenceParameters).
-=cut
 
 use constant
   { SOAP12FEATURE   => 'http://www.w3.org/2005/08/addressing/feature'
