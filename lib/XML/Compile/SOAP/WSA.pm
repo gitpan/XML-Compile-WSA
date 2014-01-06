@@ -1,14 +1,7 @@
-# Copyrights 2010-2014 by [Mark Overmeer].
-#  For other contributors see ChangeLog.
-# See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 2.01.
 use warnings;
 use strict;
 
 package XML::Compile::SOAP::WSA;
-use vars '$VERSION';
-$VERSION = '0.91';
-
 use base 'XML::Compile::SOAP::Extension';
 
 use Log::Report 'xml-compile-soap-wsa';
@@ -34,6 +27,66 @@ my %versions =
 
 my $xsddir = File::Spec->catdir((dirname dirname __FILE__), 'WSA', 'xsd');
 
+=chapter NAME
+XML::Compile::SOAP::WSA - SOAP Web Service Addressing
+
+=chapter SYNOPSIS
+
+ # use WSA via WSDL, wsa header fields start with wsa_
+ use XML::Compile::WSDL11;     # first
+ use XML::Compile::SOAP::WSA;  # hooks into wsdl
+
+ my $wsa  = XML::Compile::SOAP::WSA->new(version => '1.0');
+ my $wsdl = XML::Compile::WSDL11->new(...);
+ my $call = $wsdl->compileClient('some_operation');
+ my ($data, $trace) = $call->(wsa_MessageID => 'xyz', %data);
+
+ print $wsdl->operation('myop')->wsaAction;
+
+=chapter DESCRIPTION
+The Web Service Addressing protocol is used to select certain
+service and port on a SOAP server, just like the "Host" header
+in C<HTTP>.
+
+The basic SOAP design uses the URI and the C<soapAction> header of HTTP
+(in case it uses HTTP, by far the most often used transport mechanism)
+However, when the server is hidden behind firewalls and proxies, these
+fields are rewritten or replaced.  This means that the definitions by
+the WSDL for the client can differ from the configuration of the server.
+This is where WSA comes into play.
+
+When WSA is enabled, header fields are added. Automatically, the
+obligatory C<wsa_To> and C<wsa_Action> fields will be added to each
+request, although you may change their values with call parameters.
+This works both for soap clients (created with M<XML::Compile::SOAP>)
+as for the soap server (created with M<XML::Compile::SOAP::Daemon>):
+simply require the WSA module to get the hooks installed.
+
+Supported fields:
+
+  Action
+  FaultTo
+  From
+  MessageID
+  RelatesTo
+  ReplyTo
+  RetryAfter
+  To
+
+=chapter METHODS
+
+=section Constructors
+
+=c_method new OPTIONS
+
+=requires version '0.9'|'1.0'|MODULE
+Explicitly state which version WSA needs to be produced.
+You may use a version number (where C<0.9> is used to represent
+the "submission" specification). You may also use the MODULE
+name, which is a namespace constant, provided via C<::Util>.
+The only option is currently C<WSA10MODULE>.
+
+=cut
 
 sub init($)
 {   my ($self, $args) = @_;
@@ -53,6 +106,13 @@ sub init($)
 
 #-----------
 
+=section Attributes
+
+=method version
+Returns the version number.
+=method wsaNS
+Returns the namespace used for this WSA version.
+=cut
 
 sub version() {shift->{version}}
 sub wsaNS()   {$versions{shift->{version}}{wsa}}
@@ -167,5 +227,17 @@ sub soap11HandlerWrapper($$$)
 }
 *soap12HandlerWrapper = \&soap11HandlerWrapper;
 
+=section SEE ALSO
+=over 4
+=item Web Services Addressing 1.0 - Core
+F<http://www.w3.org/TR/ws-addr-core>, 9 May 2006
+
+=item Web Services Addressing 1.0 - SOAP Binding
+F<http://www.w3.org/TR/ws-addr-soap>, 9 May 2006
+
+=item Web Services Addressing 1.0 - WSDL Binding
+F<http://www.w3.org/TR/ws-addr-wsdl>, 29 May 2006
+=back
+=cut
 
 1;
