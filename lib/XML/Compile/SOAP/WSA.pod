@@ -42,9 +42,16 @@ This works both for soap clients (created with L<XML::Compile::SOAP|XML::Compile
 as for the soap server (created with XML::Compile::SOAP::Daemon):
 simply require the WSA module to get the hooks installed.
 
-B<Warning:> this being a very recent module, thing may not work. There
-is no real-life experience with the code, as yet. Please contact the
-author when you are succesful or discovered problems.
+Supported fields:
+
+  Action
+  FaultTo
+  From
+  MessageID
+  RelatesTo
+  ReplyTo
+  RetryAfter
+  To
 
 See L<documentation in the base class|XML::Compile::SOAP::Extension/"DESCRIPTION">.
  
@@ -113,6 +120,28 @@ See L<XML::Compile::SOAP::Extension/"SOAP11">
 
 =back
 
+=head2 SOAP12
+
+See L<documentation in the base class|XML::Compile::SOAP::Extension/"SOAP12">.
+ 
+=over 4
+
+=item $obj-E<gt>B<soap12ClientWrapper>(OPERATION, CALL, ARGS)
+
+See L<XML::Compile::SOAP::Extension/"SOAP12">
+
+=item $obj-E<gt>B<soap12HandlerWrapper>(OPERATION, CALLBACK, ARGS)
+
+See L<XML::Compile::SOAP::Extension/"SOAP12">
+
+=item $obj-E<gt>B<soap12OperationInit>(OPERATION, ARGS)
+
+=item XML::Compile::SOAP::WSA-E<gt>B<soap12OperationInit>(OPERATION, ARGS)
+
+See L<XML::Compile::SOAP::Extension/"SOAP12">
+
+=back
+
 =head2 Attributes
 
 =over 4
@@ -151,12 +180,13 @@ See L<documentation in the base class|XML::Compile::SOAP::Extension/"SYNOPSYS">.
  
 =head1 SEE ALSO
 
-This module is part of XML-Compile-WSA distribution version 0.90,
-built on October 01, 2013. Website: F<http://perl.overmeer.net/xml-compile/>
+This module is part of XML-Compile-WSA distribution version 0.91,
+built on January 06, 2014. Website: F<http://perl.overmeer.net/xml-compile/>
 
 Other distributions in this suite:
 L<XML::Compile>,
 L<XML::Compile::SOAP>,
+L<XML::Compile::WSDL11>,
 L<XML::Compile::SOAP12>,
 L<XML::Compile::SOAP::Daemon>,
 L<XML::Compile::SOAP::WSA>,
@@ -178,7 +208,7 @@ on C<irc.perl.org>.
 
 =head1 LICENSE
 
-Copyrights 2010-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
+Copyrights 2010-2014 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

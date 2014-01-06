@@ -1,4 +1,4 @@
-# Copyrights 2010-2013 by [Mark Overmeer].
+# Copyrights 2010-2014 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
 # Pod stripped from pm file by OODoc 2.01.
@@ -7,7 +7,7 @@ use strict;
 
 package XML::Compile::SOAP::WSA;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.91';
 
 use base 'XML::Compile::SOAP::Extension';
 
@@ -57,9 +57,10 @@ sub init($)
 sub version() {shift->{version}}
 sub wsaNS()   {$versions{shift->{version}}{wsa}}
 
-# This is not uglier than the WSA etension does: if you do not
-# specify these attributes explicitly, everyone needs hacks.
-# documented in XML::Compile::SOAP::Operation
+# This is not uglier than the WSA specification does: if you do not
+# specify these attributes cleanly in the WSDL specs, then everyone
+# needs hacks.
+# Documented in XML::Compile::SOAP::Operation
 
 sub XML::Compile::SOAP::Operation::wsaAction($)
 {  my ($self, $dir) = @_;
@@ -133,6 +134,7 @@ sub soap11OperationInit($$)
     # soap11 specific
     $op->addHeader(OUTPUT => wsa_FaultDetail => "{$ns}FaultDetail");
 }
+*soap12OperationInit = \&soap11OperationInit;
 
 sub soap11ClientWrapper($$$)
 {   my ($self, $op, $call, $args) = @_;
@@ -149,6 +151,7 @@ sub soap11ClientWrapper($$$)
         # should we check that the wsa_Action in the reply is correct?
     };
 }
+*soap12ClientWrapper = \&soap11ClientWrapper;
 
 sub soap11HandlerWrapper($$$)
 {   my ($self, $op, $cb, $args) = @_;
@@ -162,6 +165,7 @@ sub soap11HandlerWrapper($$$)
         $data;
     };
 }
+*soap12HandlerWrapper = \&soap11HandlerWrapper;
 
 
 1;
