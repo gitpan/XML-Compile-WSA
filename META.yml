@@ -27,4 +27,4 @@ requires:
   XML::Compile::SOAP: 3.00
   XML::Compile::Tester: 0.06
   XML::Compile::WSDL11: 3.00
-version: 0.92
+version: 0.93

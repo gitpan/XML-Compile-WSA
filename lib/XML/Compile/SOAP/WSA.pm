@@ -6,8 +6,7 @@ use warnings;
 use strict;
 
 package XML::Compile::SOAP::WSA;
-use vars '$VERSION';
-$VERSION = '0.92';
+our $VERSION = '0.93';
 
 use base 'XML::Compile::SOAP::Extension';
 

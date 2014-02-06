@@ -6,8 +6,7 @@ use warnings;
 use strict;
 
 package XML::Compile::WSA::Util;
-use vars '$VERSION';
-$VERSION = '0.92';
+our $VERSION = '0.93';
 
 use base 'Exporter';
 
